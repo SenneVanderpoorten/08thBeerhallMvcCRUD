@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Beerhall.Data;
 using Microsoft.EntityFrameworkCore;
+using Beerhall.Data.Repositories;
+using Beerhall.Models.Domain;
 
 namespace Beerhall
 {
@@ -25,6 +27,7 @@ namespace Beerhall
             services.AddMvc();
 
             services.AddScoped<BeerhallDataInitializer>();
+            services.AddScoped<IBrewerRepository, BrewerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +49,7 @@ namespace Beerhall
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Brewer}/{action=Index}/{id?}");
             });
 
             beerhallDataInitializer.InitializeData();
