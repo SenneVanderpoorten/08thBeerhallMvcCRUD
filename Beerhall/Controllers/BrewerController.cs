@@ -35,10 +35,18 @@ namespace Beerhall.Controllers
         [HttpPost]
         public IActionResult Edit(BrewerEditViewModel brewerEditViewModel, int id)
         {
-            Brewer brewer = _brewerRepository.GetBy(id);
-            MapBrewerEditViewModelToBrewer(brewerEditViewModel, brewer);
-            _brewerRepository.SaveChanges();
-            TempData["message"] = $"You successfully updated brewer {brewer.Name}.";
+            Brewer brewer = null;
+            try
+            {
+                brewer = _brewerRepository.GetBy(id);
+                MapBrewerEditViewModelToBrewer(brewerEditViewModel, brewer);
+                _brewerRepository.SaveChanges();
+                TempData["message"] = $"You successfully updated brewer {brewer.Name}.";
+            }
+            catch
+            {
+                TempData["error"] = $"Sorry, something went wrong, brewer {brewer?.Name} was not updated...";
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -53,10 +61,17 @@ namespace Beerhall.Controllers
         public IActionResult Create(BrewerEditViewModel brewerEditViewModel)
         {
             Brewer brewer = new Brewer();
-            MapBrewerEditViewModelToBrewer(brewerEditViewModel, brewer);
-            _brewerRepository.Add(brewer);
-            _brewerRepository.SaveChanges();
-            TempData["message"] = $"You successfully added brewer {brewer.Name}.";
+            try
+            {
+                MapBrewerEditViewModelToBrewer(brewerEditViewModel, brewer);
+                _brewerRepository.Add(brewer);
+                _brewerRepository.SaveChanges();
+                TempData["message"] = $"You successfully added brewer {brewer.Name}.";
+            }
+            catch
+            {
+                TempData["error"] = "Sorry, something went wrong, the brewer was not added...";
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -69,10 +84,18 @@ namespace Beerhall.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            Brewer brewer = _brewerRepository.GetBy(id);
-            _brewerRepository.Delete(brewer);
-            _brewerRepository.SaveChanges();
-            TempData["message"] = $"You successfully deleted brewer {brewer.Name}.";
+            Brewer brewer = null;
+            try
+            {
+                brewer = _brewerRepository.GetBy(id);
+                _brewerRepository.Delete(brewer);
+                _brewerRepository.SaveChanges();
+                TempData["message"] = $"You successfully deleted brewer {brewer.Name}.";
+            }
+            catch
+            {
+                TempData["error"] = $"Sorry, something went wrong, brewer {brewer?.Name} was not deleted…";
+            }
             return RedirectToAction(nameof(Index));
         }
 
