@@ -6,6 +6,7 @@ using Beerhall.Data;
 using Microsoft.EntityFrameworkCore;
 using Beerhall.Data.Repositories;
 using Beerhall.Models.Domain;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Beerhall
 {
@@ -26,6 +27,7 @@ namespace Beerhall
 
             services.AddMvc();
 
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddScoped<BeerhallDataInitializer>();
             services.AddScoped<IBrewerRepository, BrewerRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
