@@ -1,6 +1,4 @@
-using System;
-
-namespace Beerhall.Models
+namespace Beerhall.Models.ViewModels
 {
     public class ErrorViewModel
     {
