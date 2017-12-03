@@ -27,7 +27,6 @@ namespace Beerhall
 
             services.AddMvc();
 
-            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddScoped<BeerhallDataInitializer>();
             services.AddScoped<IBrewerRepository, BrewerRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
